@@ -23,6 +23,11 @@ var (
 		Name:  "hoodi",
 		Usage: "Runs Prysm configured for the Hoodi test network.",
 	}
+	// BoltTestnet flag for the Bolt network.
+	BoltTestnet = &cli.BoolFlag{
+		Name:  "bolt-testnet",
+		Usage: "Runs Prysm configured for the Bolt test network.",
+	}
 	// Mainnet flag for easier tooling, no-op
 	Mainnet = &cli.BoolFlag{
 		Value: true,
@@ -233,6 +238,7 @@ var ValidatorFlags = append(deprecatedFlags, []cli.Flag{
 	HoleskyTestnet,
 	SepoliaTestnet,
 	HoodiTestnet,
+	BoltTestnet,
 	Mainnet,
 	dynamicKeyReloadDebounceInterval,
 	disableAttestTimely,
@@ -259,6 +265,7 @@ var BeaconChainFlags = combinedFlags([]cli.Flag{
 	HoleskyTestnet,
 	SepoliaTestnet,
 	HoodiTestnet,
+	BoltTestnet,
 	Mainnet,
 	disablePeerScorer,
 	disableBroadcastSlashingFlag,
@@ -307,4 +314,5 @@ var NetworkFlags = []cli.Flag{
 	SepoliaTestnet,
 	HoleskyTestnet,
 	HoodiTestnet,
+	BoltTestnet,
 }

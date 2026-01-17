@@ -154,6 +154,12 @@ func configureTestnet(ctx *cli.Context) error {
 			return err
 		}
 		params.UseHoodiNetworkConfig()
+	} else if ctx.Bool(BoltTestnet.Name) {
+		log.Info("Running on the Bolt Network Testnet")
+		if err := params.SetActive(params.BoltConfig().Copy()); err != nil {
+			return err
+		}
+		params.UseBoltNetworkConfig()
 	} else {
 		if ctx.IsSet(cmd.ChainConfigFileFlag.Name) {
 			log.Warning("Running on custom Ethereum network specified in a chain configuration YAML file")
