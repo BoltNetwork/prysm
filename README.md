@@ -1,13 +1,15 @@
-<h1 align="left">Prysm: An Ethereum Consensus Implementation Written in Go</h1>
+<h1 align="center">⚡ Bolt Network: Beacon Chain Client</h1>
 
-<div align="left">
-  
-[![Build status](https://badge.buildkite.com/b555891daf3614bae4284dcf365b2340cefc0089839526f096.svg?branch=master)](https://buildkite.com/prysmatic-labs/prysm)
-[![Go Report Card](https://goreportcard.com/badge/github.com/OffchainLabs/prysm)](https://goreportcard.com/report/github.com/OffchainLabs/prysm)
+<p align="center">
+  <strong>Fast Ethereum testnet with 5-second blocks — test faster, ship faster.</strong>
+</p>
+
+<div align="center">
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/BoltNetwork/prysm)](https://goreportcard.com/report/github.com/BoltNetwork/prysm)
 [![Consensus_Spec_Version 1.4.0](https://img.shields.io/badge/Consensus%20Spec%20Version-v1.4.0-blue.svg)](https://github.com/ethereum/consensus-specs/tree/v1.4.0)
-[![Execution_API_Version 1.0.0-beta.2](https://img.shields.io/badge/Execution%20API%20Version-v1.0.0.beta.2-blue.svg)](https://github.com/ethereum/execution-apis/tree/v1.0.0-beta.2/src/engine)
-[![Discord](https://user-images.githubusercontent.com/7288322/34471967-1df7808a-efbb-11e7-9088-ed0b04151291.png)](https://discord.gg/prysm)
-[![GitPOAP Badge](https://public-api.gitpoap.io/v1/repo/OffchainLabs/prysm/badge)](https://www.gitpoap.io/gh/OffchainLabs/prysm)
+[![Block Time](https://img.shields.io/badge/Block%20Time-5%20seconds-brightgreen.svg)](https://boltnode.org)
+[![Website](https://img.shields.io/badge/Website-boltnode.org-blue.svg)](https://boltnode.org)
 
 </div>
 
@@ -15,28 +17,86 @@
 
 ## 📖 Overview
 
-This is the core repository for Prysm, a [Golang](https://go.dev/) implementation of the [Ethereum Consensus](https://ethereum.org/en/developers/docs/consensus-mechanisms/#proof-of-stake) [specification](https://github.com/ethereum/consensus-specs), developed by [Offchain Labs](https://www.offchainlabs.com).
+**Bolt Network** is a fast Ethereum testnet featuring **5-second block times** and Flashbots integration. Built for developers who need rapid iteration without waiting for mainnet's 12-second blocks.
 
-See the [Changelog](https://github.com/OffchainLabs/prysm/releases) for details of the latest releases and upcoming breaking changes.
+This repository contains the Beacon Chain client for Bolt Network, forked from [Prysm](https://github.com/prysmaticlabs/prysm) and optimized for the Bolt testnet environment.
+
+### 🎯 Use Cases
+
+- **Smart Contract Testing** — Iterate 2.4x faster with 5-second blocks
+- **MEV Research** — Experiment with Flashbots in a sandboxed environment
+- **Validator Experimentation** — Test validator setups without mainnet risk
+- **CI/CD Pipelines** — Faster test suites for blockchain applications
+- **Load Testing dApps** — Stress test your applications at accelerated speeds
 
 ---
 
-## 🚀 Getting Started
+## 🌐 Network Information
 
-A detailed set of installation and usage instructions as well as breakdowns of each individual component are available in the **[official documentation portal](https://prysm.offchainlabs.com/docs/)**.
-
-💬 **Need help?** Join our **[Discord Community](https://discord.gg/prysm)** for support.
+| Property | Value |
+|----------|-------|
+| **Network Name** | Bolt Network Testnet |
+| **Chain ID** | `1337` |
+| **Block Time** | `5 seconds` |
+| **RPC Endpoint** | `https://rpc.boltnode.org` |
+| **Block Explorer** | [explorer.boltnode.org](https://explorer.boltnode.org) |
+| **Validator Launchpad** | [launchpad.boltnode.org](https://launchpad.boltnode.org) |
 
 ---
 
-## 🏆 Staking on Mainnet
+## 🚀 Quick Start
 
-To participate in staking, you can join the **[official Ethereum launchpad](https://launchpad.ethereum.org)**. The launchpad is the **only recommended** way to become a validator on mainnet.
+### Prerequisites
 
-🔍 Explore validator rewards/penalties:
+- [RETH](https://github.com/paradigmxyz/reth) (Execution Client)
+- Go 1.21+ (for building from source)
 
-- **[beaconcha.in](https://beaconcha.in)**
-- **[beaconscan](https://beaconscan.com)**
+### Run Beacon Node
+
+```bash
+# Using the launcher script
+./prysm.sh beacon-chain --bolt-testnet \
+  --execution-endpoint=http://localhost:8551 \
+  --jwt-secret=/path/to/jwt.hex
+
+# Or build and run directly
+go build -o beacon-chain ./cmd/beacon-chain
+./beacon-chain --bolt-testnet \
+  --execution-endpoint=http://localhost:8551 \
+  --jwt-secret=/path/to/jwt.hex
+```
+
+### Run Validator
+
+```bash
+./prysm.sh validator --bolt-testnet \
+  --wallet-dir=/path/to/wallet \
+  --wallet-password-file=/path/to/password.txt
+```
+
+### Run with RETH (Execution Client)
+
+```bash
+# Start RETH first
+reth node \
+  --chain bolt \
+  --http \
+  --http.api eth,net,web3 \
+  --authrpc.jwtsecret=/path/to/jwt.hex
+
+# Then start the beacon chain
+./prysm.sh beacon-chain --bolt-testnet \
+  --execution-endpoint=http://localhost:8551 \
+  --jwt-secret=/path/to/jwt.hex
+```
+
+---
+
+## 🏆 Become a Validator
+
+Ready to validate on Bolt Network? Visit the **[Bolt Validator Launchpad](https://launchpad.boltnode.org)** to get started.
+
+🔍 Track your validator performance at **[explorer.boltnode.org](https://explorer.boltnode.org)**
 
 ---
 
@@ -44,22 +104,33 @@ To participate in staking, you can join the **[official Ethereum launchpad](http
 
 ### 🔥 Branches
 
-Prysm maintains two permanent branches:
+- **[`master`](https://github.com/BoltNetwork/prysm/tree/master)** — Latest stable release
+- **[`develop`](https://github.com/BoltNetwork/prysm/tree/develop)** — Active development, base PRs here
 
-- **[`master`](https://github.com/OffchainLabs/prysm/tree/master)** - This points to the latest stable release. It is ideal for most users.
-- **[`develop`](https://github.com/OffchainLabs/prysm/tree/develop)** - This is used for development and contains the latest PRs. Developers should base their PRs on this branch.
+### 🛠 How to Contribute
 
-### 🛠 Contribution Guide
+1. Fork this repository
+2. Create a feature branch from `develop`
+3. Submit a Pull Request
 
-Want to get involved? Check out our **[Contribution Guide](https://prysm.offchainlabs.com/docs/contribute/contribution-guidelines/)** to learn more!
+---
+
+## 🔗 Resources
+
+- 🌐 **Website:** [boltnode.org](https://boltnode.org)
+- 🔎 **Explorer:** [explorer.boltnode.org](https://explorer.boltnode.org)
+- 🚀 **Launchpad:** [launchpad.boltnode.org](https://launchpad.boltnode.org)
+- 💻 **GitHub:** [github.com/BoltNetwork](https://github.com/BoltNetwork)
 
 ---
 
 ## 📜 License
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)  
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 This project is licensed under the **GNU General Public License v3.0**.
+
+Based on [Prysm](https://github.com/prysmaticlabs/prysm) by Prysmatic Labs.
 
 ---
 
